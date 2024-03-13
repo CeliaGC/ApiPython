@@ -43,18 +43,24 @@ de administrador
 -Creamos en un archivo una "instantánea" de las versiones de los paquetes que estamos usando, para que al descargar el repo un usuario, 
 se instalen estas versiones específicas con las que funciona.
     --comando: pip freeze > requirements.txt
-      Esto crea el archivo directamente en la carpeta donde estamos ubicados, con la lista de paquetes y sus versiones
+      Esto crea el archivo directamente en la carpeta donde estamos ubicados, con la lista de paquetes y sus versiones. Para instalar
+      deste este archivo:
+    --comando: pip install -r .\requirements.txt
 
 -Creamos en la carpeta raiz (raiz que contiene solo el backend, en este caso) la carpeta src con sus subcarpetas y un archivo init.
 -Salimos de nuevo a la carpeta raiz y creamos los archivos config e index, que son los que montan la aplicación
 -Configuramos el archivo init de src. Para poder importar flask, tenemos que clicar en la versión de python que aparece abajo
 a la derecha en visual y añadimos un nuevo path. Hay que navegar a backend>venv>scripts>elegimos python. En este archivo hacemos que
-la app se inicie como una instancia de flask mediante esa función init_app
--Configuramos el archivo index, donde la variable app llama a la función init_app
+la app se inicie como una instancia, un objeto de flask mediante esa función init_app(). __name__ es el directorio que contiene
+init, en este caso src.
+-Configuramos el archivo index, donde la variable app llama a la función init_app si se cumple la condición de que la carpeta 
+contenedora de index (__name__) sea igual a la carpeta raiz de todo el proyecto backend (__main__).
 -Creamos en config una configuración para app con un diccionario donde development será una instancia de la clase DevelopmentConfig
-con DEBUG activado
+con DEBUG activado. Podríamos crear otras configuraciones ahí mismo, por ejemplo ProductionConfig con Debug en false, TestingCfg, ...
 -En index, le pasamos este argumento a la variable app y en init nos aseguramos de que init_app tenga un parámetro que se interpreta
 según ese app.config.fromobject. Ese object será lo que pasemos como argumento en index, que será a su vez el objeto que hemos creado
 en config con la instancia de DevelopmentConfig. Esto es para poder trabajar en modo developer y debuguear de lo lindo. Si ahora
-hacemos cualquier cambio, la consola/navegador se refrescará.
+hacemos cualquier cambio, la consola/navegador se refrescará porque DEBUG=True
+-para levantar la app
+    --comando: python .\index.py
 
