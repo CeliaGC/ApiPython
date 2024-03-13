@@ -1,0 +1,60 @@
+Backend: tiene la lógica de negocio y la persistencia de datos
+    Lenguaje/s de programación: python
+    Framework(opcional): Flask/Django/Fast API -> Flask
+    Sistema gestor de base de datos: Mongo DB/ MySQL -> MySQL
+    Software platform(opcional): X (no aplica)
+
+Frontend: es la parte que interactúa con el usuario y que responde a sus acciones.
+    -HTML: Hypertext Markup Lenguaje, lenguaje de maquetación.
+    -CSS: Cascading Style Sheet, lenguaje de estilos => Bootstrap.
+    -Javascript: lenguaje de programación que en el frontend sirve para manejar eventos y manipular el DOM.
+        -Librerías: jQuery, React js.
+        -Framework: Angular, Vue js.
+
+Tendremos front y back en un mismo repo, aunque lo habitual es que cada uno tenga el suyo.
+
+Backend
+
+-Descargamos python e instalamos asegurándonos de clicar la casilla "include PATH"
+-Reiniciamos PC
+-En el repo, abrimos terminal y creamos un entorno virtual de python. Esto es para que los paquetes que instalemos sólo exisistan
+ en ese ecosistema.
+    --Comando: python -m virtualenv <nombre del entorno> => python -m virtualenv venv
+    --Para activar el entorno virtual, comando: .\venv\Scripts\activate
+
+*En pc's con más de un usuario donde el usuario actual no es administrador:
+
+-Descargamos python
+-Ejecutamos el instalador como administrador
+-Clicamos los botones de "incluir PATH" y "usar privilegios de administrador en la instalación"
+-Elegimos instalación personalizada y clicamos en todos los pasos los botones de "instalar para todos los usuarios"
+-Reiniciamos
+-En inicio, buscamos PowerShell y lo abrimos como administrador (botón contextual). Allí vamos a modificar la política de ejecución de 
+scripts para poder ejecutar el script de activación del entorno visual, que de otro modo nos dará error por no tener autorización
+de administrador
+
+    --comando: Set-ExecutionPolicy -ExecutionPolicy <PolicyName>
+      Hay varias políticas, en concreto usaremos Bypass: 
+    --comando: Set-ExecutionPolicy -ExecutionPolicy Bypass
+
+-En el repo ahora seguimos los pasos de la línea 20
+-Si necesitamos desactivar un entorno virtual 
+    --comando: deactivate
+-Creamos en un archivo una "instantánea" de las versiones de los paquetes que estamos usando, para que al descargar el repo un usuario, 
+se instalen estas versiones específicas con las que funciona.
+    --comando: pip freeze > requirements.txt
+      Esto crea el archivo directamente en la carpeta donde estamos ubicados, con la lista de paquetes y sus versiones
+
+-Creamos en la carpeta raiz (raiz que contiene solo el backend, en este caso) la carpeta src con sus subcarpetas y un archivo init.
+-Salimos de nuevo a la carpeta raiz y creamos los archivos config e index, que son los que montan la aplicación
+-Configuramos el archivo init de src. Para poder importar flask, tenemos que clicar en la versión de python que aparece abajo
+a la derecha en visual y añadimos un nuevo path. Hay que navegar a backend>venv>scripts>elegimos python. En este archivo hacemos que
+la app se inicie como una instancia de flask mediante esa función init_app
+-Configuramos el archivo index, donde la variable app llama a la función init_app
+-Creamos en config una configuración para app con un diccionario donde development será una instancia de la clase DevelopmentConfig
+con DEBUG activado
+-En index, le pasamos este argumento a la variable app y en init nos aseguramos de que init_app tenga un parámetro que se interpreta
+según ese app.config.fromobject. Ese object será lo que pasemos como argumento en index, que será a su vez el objeto que hemos creado
+en config con la instancia de DevelopmentConfig. Esto es para poder trabajar en modo developer y debuguear de lo lindo. Si ahora
+hacemos cualquier cambio, la consola/navegador se refrescará.
+
