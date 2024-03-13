@@ -1,0 +1,1 @@
+Image gallery project created with React, python and flask framework and MySQL as database management system.
